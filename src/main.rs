@@ -28,6 +28,17 @@ fn get_time_left_string(seconds: u16) -> String {
     return time_left_string;
 }
 
+// This function displays a countdown snapshot
+fn display_countdown_snapshot(seconds_left: u16, _seconds_total: u16, subsession: &str) {
+    print!("\r{}", " ".repeat(100));
+
+    let time_left_string: String = get_time_left_string(seconds_left);
+    print!("\r{time_left_string} of {subsession} remaining.");
+    stdout().flush().unwrap();
+
+    sleep(1);
+}
+
 fn main() {
     // Parse arguments
     let args: Args = Args::parse();
@@ -36,7 +47,7 @@ fn main() {
     let rest_minutes: &u16 = &args.rest;
     let sessions: &u8 = &args.sessions;
 
-    // Convert minute time values into seconds to count down
+    // Convert minute time values into seconds to make counting down easier
     let work_seconds: u16 = work_minutes * 60;
     let rest_seconds: u16 = rest_minutes * 60;
 
@@ -45,23 +56,11 @@ fn main() {
         println!("Session {session}");
 
         for work_seconds_left in (0..=work_seconds).rev() {
-            print!("\r{}", " ".repeat(100));
-
-            let time_left_string: String = get_time_left_string(work_seconds_left);
-            print!("\r{time_left_string} of work remaining.");
-            stdout().flush().unwrap();
-
-            sleep(1);
+            display_countdown_snapshot(work_seconds_left, work_seconds, "work")
         }
 
         for rest_seconds_left in (0..=rest_seconds).rev() {
-            print!("\r{}", " ".repeat(100));
-
-            let time_left_string: String = get_time_left_string(rest_seconds_left);
-            print!("\r{time_left_string} of rest remaining.");
-            stdout().flush().unwrap();
-
-            sleep(1);
+            display_countdown_snapshot(rest_seconds_left, rest_seconds, "rest")
         }
 
         println!();
