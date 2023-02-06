@@ -8,6 +8,11 @@ struct Args {
     sessions: u8,
 }
 
+// This function sleeps for a specified amount of seconds
+fn sleep(seconds: u8) {
+    thread::sleep(time::Duration::from_secs(seconds.into()));
+}
+
 // This function converts an amount of seconds into hours, minutes and secons for user display
 fn get_time_left_string(seconds: u16) -> String {
     let hours: u16 = seconds / 3600;
@@ -41,13 +46,13 @@ fn main() {
         for work_seconds_left in (0..=work_seconds).rev() {
             let time_left_string: String = get_time_left_string(work_seconds_left);
             println!("{time_left_string} of work remaining.");
-            thread::sleep(time::Duration::from_secs(1));
+            sleep(1);
         }
 
         for rest_seconds_left in (0..=rest_seconds).rev() {
             let time_left_string: String = get_time_left_string(rest_seconds_left);
             println!("{time_left_string} of work remaining.");
-            thread::sleep(time::Duration::from_secs(1));
+            sleep(1);
         }
     }
 }
