@@ -39,13 +39,13 @@ fn main() {
         println!("Session {session}");
 
         for work_seconds_left in (0..=work_seconds).rev() {
-            let time_left_string = get_time_left_string(work_seconds_left);
+            let time_left_string: String = get_time_left_string(work_seconds_left);
             println!("{time_left_string} of work remaining.");
             thread::sleep(time::Duration::from_secs(1));
         }
 
         for rest_seconds_left in (0..=rest_seconds).rev() {
-            let time_left_string = get_time_left_string(rest_seconds_left);
+            let time_left_string: String = get_time_left_string(rest_seconds_left);
             println!("{time_left_string} of work remaining.");
             thread::sleep(time::Duration::from_secs(1));
         }
