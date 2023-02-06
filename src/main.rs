@@ -14,5 +14,11 @@ fn main() {
     let rest: &u16 = &args.rest;
     let sessions: &u8 = &args.sessions;
 
-    println!("You will work {sessions} sessions, each containing {work} minutes of work, and {rest} minutes of rest.")
+    let work_seconds: u16 = work * 60;
+    let rest_seconds: u16 = rest * 60;
+    let session_seconds: u16 = work_seconds + rest_seconds;
+
+    println!("You will work {sessions} sessions, each containing {work} minutes of work, and {rest} minutes of rest.");
+    println!("You will work {sessions} sessions, each containing {work_seconds} seconds of work, and {rest_seconds} seconds of rest.");
+    println!("Each session will be {session_seconds} seconds long.")
 }
