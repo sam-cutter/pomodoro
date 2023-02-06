@@ -8,6 +8,20 @@ struct Args {
     sessions: u8,
 }
 
+// This function converts an amount of seconds into hours, minutes and secons for user display
+fn get_time_left_string(seconds: u16) -> String {
+    let hours: u16 = seconds / 3600;
+    let remaining_minutes: u16 = (seconds % 3600) / 60;
+    let remaining_seconds: u16 = seconds % 60;
+
+    let time_left_string: String = format!(
+        "{} hours, {} minutes, and {} seconds",
+        hours, remaining_minutes, remaining_seconds
+    );
+
+    return time_left_string;
+}
+
 fn main() {
     // Parse arguments
     let args: Args = Args::parse();
@@ -25,12 +39,14 @@ fn main() {
         println!("Session {session}");
 
         for work_seconds_left in (0..=work_seconds).rev() {
-            println!("There are {work_seconds_left} seconds left of working.");
+            let time_left_string = get_time_left_string(work_seconds_left);
+            println!("{time_left_string} of work remaining.");
             thread::sleep(time::Duration::from_secs(1));
         }
 
         for rest_seconds_left in (0..=rest_seconds).rev() {
-            println!("There are {rest_seconds_left} seconds left of resting.");
+            let time_left_string = get_time_left_string(rest_seconds_left);
+            println!("{time_left_string} of work remaining.");
             thread::sleep(time::Duration::from_secs(1));
         }
     }
