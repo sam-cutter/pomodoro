@@ -9,16 +9,18 @@ struct Args {
 }
 
 fn main() {
+    // Parse arguments
     let args: Args = Args::parse();
 
     let work_minutes: &u16 = &args.work;
     let rest_minutes: &u16 = &args.rest;
     let sessions: &u8 = &args.sessions;
 
+    // Convert minute time values into seconds to count down
     let work_seconds: u16 = work_minutes * 60;
     let rest_seconds: u16 = rest_minutes * 60;
-    // let session_seconds: u16 = work_seconds + rest_seconds;
 
+    // For each session, run through work and rest subsessions
     for session in 1..=*sessions {
         println!("Session {session}");
 
