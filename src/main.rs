@@ -28,12 +28,23 @@ fn get_time_left_string(seconds: u16) -> String {
     return time_left_string;
 }
 
+// This function takes 2 integers and returns the rounded percentage
+fn get_percentage(a: u16, b: u16) -> u16 {
+    let percentage: u16 = (a as f32 / b as f32 * 100.0).round() as u16;
+
+    return percentage;
+}
+
 // This function displays a countdown snapshot
-fn display_countdown_snapshot(seconds_left: u16, _seconds_total: u16, subsession: &str) {
+fn display_countdown_snapshot(seconds_left: u16, seconds_total: u16, subsession: &str) {
     print!("\r{}", " ".repeat(100));
 
     let time_left_string: String = get_time_left_string(seconds_left);
-    print!("\r{time_left_string} of {subsession} remaining.");
+
+    let seconds_done: u16 = seconds_total - seconds_left;
+    let percentage_done = get_percentage(seconds_done, seconds_total);
+
+    print!("\r{time_left_string} of {subsession} remaining. You are {percentage_done}% done.");
     stdout().flush().unwrap();
 
     sleep(1);
